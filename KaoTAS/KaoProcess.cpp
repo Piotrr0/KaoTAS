@@ -1,6 +1,6 @@
 #include "KaoProcess.h"
 #include <iostream>
-#include "Addresses.h"
+#include "Offsets.h"
 
 KaoProcess::KaoProcess()
 {
@@ -17,29 +17,11 @@ KaoProcess::KaoProcess()
 		std::cerr << "Failed to get module base address.\n";
 		return;
 	}
-	localPlayerAddress = mem->Read<std::uintptr_t>(ModuleBaseAddress + Address::localPlayer);
+	ReadGameAddresses();
 }
 
-bool KaoProcess::WriteDucats(int amount)
+void KaoProcess::ReadGameAddresses()
 {
-	if (localPlayerAddress != 0)
-	{
-		const auto coinAddress = localPlayerAddress + Address::ducatsOffset;
-		if (mem->Write<int>(coinAddress, amount))
-		{
-			std::cout << "Successfully wrote " << amount << " coins to memory.\n";
-			return true;
-		}
-	}
-	return false;
-}
-
-int KaoProcess::ReadDucats()
-{
-	if (localPlayerAddress != 0)
-	{
-		const auto ducatsAddress = localPlayerAddress + Address::ducatsOffset;
-		int ducats = mem->Read<int>(ducatsAddress);
-		return ducats;
-	}
+	localPlayerAddress = mem->Read<uintptr_t>(ModuleBaseAddress + Offset::localPlayer);
+	ducatsAddress = localPlayerAddress + Offset::ducats;
 }

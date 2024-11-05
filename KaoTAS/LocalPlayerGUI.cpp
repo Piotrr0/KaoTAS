@@ -15,12 +15,13 @@ void LocalPlayerGUI::RenderLocalPlayerGUI()
 		ImGui::Begin(name);
 		if (ImGui::InputInt("Ducats", ducats))
 		{
-			kaoProcess->WriteDucats(*ducats);
+			kaoProcess->WriteToKaoMemory<int>(kaoProcess->GetDucatsAddress(), *ducats);
 		}
 		else
 		{
-			*ducats = kaoProcess->ReadDucats();
+			*ducats = kaoProcess->ReadFromKaoMemory<int>(kaoProcess->GetDucatsAddress());
 		}
+
 
 		ImGui::Text("Crystal");
 		ImGui::Text("Star");
