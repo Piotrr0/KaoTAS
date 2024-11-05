@@ -5,8 +5,8 @@
 
 namespace Address
 {
-    constexpr std::uintptr_t coinsOffset = 0x734DC8;
     constexpr std::uintptr_t localPlayer = 0x77E3B8;
+    constexpr std::uintptr_t ducatsOffset = 0x734DC8;
 }
 
 #endif

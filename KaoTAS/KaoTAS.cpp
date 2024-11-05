@@ -7,17 +7,9 @@
 #include <GLFW/glfw3.h>
 
 #include <iostream>
-#include "Memory.h"
-#include "Addresses.h"
+#include "Gui.h"
 
-using namespace Address;
-
-void LoadProcess();
 void SetupImGui(GLFWwindow* window);
-void RenderImGui();
-
-Memory* mem = nullptr;
-uint64_t ModuleBaseAddress;
 
 int main()
 {
@@ -37,9 +29,8 @@ int main()
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
 
-    LoadProcess();
-
     SetupImGui(window);
+    GUI gui;
 
     while (!glfwWindowShouldClose(window))
     {
@@ -49,7 +40,7 @@ int main()
         ImGui::NewFrame();
 
         // Render ImGui content
-        RenderImGui();
+        gui.RenderUI();
 
         // Rendering
         ImGui::Render();
@@ -71,19 +62,8 @@ int main()
     glfwDestroyWindow(window);
     glfwTerminate();
 
-    delete mem; // Cleanup memory object
 
     return 0;
-}
-
-void LoadProcess()
-{
-    mem = new Memory({ L"kao2.exe" });
-    ModuleBaseAddress = mem->GetModuleAddress(L"kao2.exe");
-    if (ModuleBaseAddress == 0) 
-    {
-        std::cerr << "Failed to get module base address.\n";
-    }
 }
 
 void SetupImGui(GLFWwindow* window)
@@ -98,28 +78,4 @@ void SetupImGui(GLFWwindow* window)
     // Initialize ImGui for GLFW and OpenGL3
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 130");  // GLSL version
-}
-
-void RenderImGui()
-{
-    ImGui::Begin("KaoTAS");
-
-    static int coins = 0;
-    ImGui::InputInt("Coins:", &coins);
-    ImGui::Text("Coins: %d", coins);
-
-    if (ImGui::Button("Write mem"))
-    {
-        const auto localPlayerAddress = mem->Read<std::uintptr_t>(ModuleBaseAddress + localPlayer);
-        if (localPlayerAddress != 0) 
-        {
-            const auto coinAddress = localPlayerAddress + coinsOffset;
-            if (mem->Write<int>(coinAddress, coins)) 
-            {
-                std::cout << "Successfully wrote " << coins << " coins to memory.\n";
-            }
-        }
-    }
-
-    ImGui::End();
 }
