@@ -38,12 +38,15 @@ private:
 	Memory* mem = nullptr;
 
 	uint64_t ModuleBaseAddress = 0;
-	uintptr_t localPlayerAddress = 0;
-	uintptr_t ducatsAddress = 0;
 
+	uintptr_t ducatsAddress = 0;
+	uintptr_t crystalsAddress = 0;
+	uintptr_t starsAddress = 0;
+	
 public:
-	inline uintptr_t GetLocalPlayerAddress() const { return localPlayerAddress; }
 	inline uintptr_t GetDucatsAddress() const { return ducatsAddress; }
+	inline uintptr_t GetCrystalsAddress() const { return crystalsAddress; }
+	inline uintptr_t GetStarsAddress() const { return starsAddress; }
 
 };
 

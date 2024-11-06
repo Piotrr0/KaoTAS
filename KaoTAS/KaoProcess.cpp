@@ -22,6 +22,7 @@ KaoProcess::KaoProcess()
 
 void KaoProcess::ReadGameAddresses()
 {
-	localPlayerAddress = mem->Read<uintptr_t>(ModuleBaseAddress + Offset::localPlayer);
-	ducatsAddress = localPlayerAddress + Offset::ducats;
+	ducatsAddress = ModuleBaseAddress + Offset::ducats;
+	crystalsAddress = ModuleBaseAddress + Offset::crystals;
+	starsAddress = ModuleBaseAddress + Offset::stars;
 }

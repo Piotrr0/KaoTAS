@@ -5,7 +5,6 @@
 LocalPlayerGUI::LocalPlayerGUI()
 {
 	kaoProcess = new KaoProcess();
-	ducats = new int{};
 }
 
 void LocalPlayerGUI::RenderLocalPlayerGUI()
@@ -13,19 +12,36 @@ void LocalPlayerGUI::RenderLocalPlayerGUI()
 	if (kaoProcess)
 	{
 		ImGui::Begin(name);
-		if (ImGui::InputInt("Ducats", ducats))
-		{
-			kaoProcess->WriteToKaoMemory<int>(kaoProcess->GetDucatsAddress(), *ducats);
-		}
-		else
-		{
-			*ducats = kaoProcess->ReadFromKaoMemory<int>(kaoProcess->GetDucatsAddress());
-		}
 
-
-		ImGui::Text("Crystal");
-		ImGui::Text("Star");
+		RenderInput<int>("Ducats", &ducats, kaoProcess->GetDucatsAddress());
+		RenderInput<int>("Crystal", &crystals, kaoProcess->GetCrystalsAddress());
+		RenderInput<int>("Stars", &stars, kaoProcess->GetStarsAddress());
 
 		ImGui::End();
+	}
+}
+
+template <typename T>
+void LocalPlayerGUI::RenderInput(const char* label, T* value, uintptr_t address)
+{
+	if (kaoProcess == nullptr) return;
+
+	bool modified = false;
+	if constexpr (std::is_same_v<T, int>)
+	{
+		modified = ImGui::InputInt(label, value);
+	}
+	else if constexpr (std::is_same_v<T, float>) 
+	{
+		modified = ImGui::InputFloat(label, value);
+	}
+
+	if (modified) 
+	{
+		kaoProcess->WriteToKaoMemory<T>(address, *value);
+	}
+	else 
+	{
+		*value = kaoProcess->ReadFromKaoMemory<T>(address);
 	}
 }

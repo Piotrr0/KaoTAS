@@ -5,8 +5,9 @@
 
 namespace Offset
 {
-    constexpr uintptr_t localPlayer = 0x77E3B8; // + kao2.exe
-    constexpr uintptr_t ducats = 0x734DC8; // + localPlayer
+    constexpr uintptr_t ducats = 0x734DC8; // + ModuleBaseAddress
+    constexpr uintptr_t crystals = 0x734DCC; // + ModuleBaseAddress
+    constexpr uintptr_t stars = 0x734DD0; // + ModuleBaseAddress
 }
 
 #endif
