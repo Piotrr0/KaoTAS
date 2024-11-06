@@ -175,6 +175,7 @@
     <ClInclude Include="KaoProcess.h" />
     <ClInclude Include="LocalPlayerGUI.h" />
     <ClInclude Include="Memory.h" />
+    <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

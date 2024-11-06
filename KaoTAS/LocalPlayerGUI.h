@@ -23,6 +23,10 @@ private:
 	int ducats = 0;
 	int crystals = 0;
 	int stars = 0;
+	
+	float positionX = 0.f;
+	float positionY = 0.f;
+	float positionZ = 0.f;
 
 public:
 };

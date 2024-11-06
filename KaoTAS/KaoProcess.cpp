@@ -22,7 +22,20 @@ KaoProcess::KaoProcess()
 
 void KaoProcess::ReadGameAddresses()
 {
+	kao2GameletAddress = ModuleBaseAddress + Offset::kao2Gamelet;
+	localPlayerAddress = kao2GameletAddress + Offset::localPlayer;
+
+	positionAddress = Vector3<uintptr_t>
+	(
+		localPlayerAddress + Offset::X,
+		localPlayerAddress + Offset::Y,
+		localPlayerAddress + Offset::Z
+	);
+
+
 	ducatsAddress = ModuleBaseAddress + Offset::ducats;
 	crystalsAddress = ModuleBaseAddress + Offset::crystals;
 	starsAddress = ModuleBaseAddress + Offset::stars;
+	std::cout << std::hex << kao2GameletAddress << std::endl;
+
 }

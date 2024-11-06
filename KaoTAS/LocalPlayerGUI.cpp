@@ -13,9 +13,24 @@ void LocalPlayerGUI::RenderLocalPlayerGUI()
 	{
 		ImGui::Begin(name);
 
-		RenderInput<int>("Ducats", &ducats, kaoProcess->GetDucatsAddress());
-		RenderInput<int>("Crystal", &crystals, kaoProcess->GetCrystalsAddress());
-		RenderInput<int>("Stars", &stars, kaoProcess->GetStarsAddress());
+		ImGui::Text("Position");
+		ImGui::BeginChild("Position", ImVec2(200, 200), true, ImGuiWindowFlags_NoScrollbar);
+		{
+			RenderInput<float>("X", &positionX, kaoProcess->GetPositionAddress().x);
+			RenderInput<float>("Y", &positionY, kaoProcess->GetPositionAddress().y);
+			RenderInput<float>("Z", &positionZ, kaoProcess->GetPositionAddress().z);
+		}
+		ImGui::EndChild();
+
+		// Resources Section
+		ImGui::Text("Resources");
+		ImGui::BeginChild("Resources", ImVec2(200, 80), true, ImGuiWindowFlags_NoScrollbar);
+		{
+			RenderInput<int>("Ducats", &ducats, kaoProcess->GetDucatsAddress());
+			RenderInput<int>("Crystal", &crystals, kaoProcess->GetCrystalsAddress());
+			RenderInput<int>("Stars", &stars, kaoProcess->GetStarsAddress());
+		}
+		ImGui::EndChild();
 
 		ImGui::End();
 	}
@@ -31,16 +46,16 @@ void LocalPlayerGUI::RenderInput(const char* label, T* value, uintptr_t address)
 	{
 		modified = ImGui::InputInt(label, value);
 	}
-	else if constexpr (std::is_same_v<T, float>) 
+	else if constexpr (std::is_same_v<T, float>)
 	{
 		modified = ImGui::InputFloat(label, value);
 	}
 
-	if (modified) 
+	if (modified)
 	{
 		kaoProcess->WriteToKaoMemory<T>(address, *value);
 	}
-	else 
+	else
 	{
 		*value = kaoProcess->ReadFromKaoMemory<T>(address);
 	}
