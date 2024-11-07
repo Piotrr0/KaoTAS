@@ -1,6 +1,7 @@
 #include "CheckpointGUI.h"
 #include "imgui.h"
 #include <string>
+#include "KeyBinds.h"
 
 CheckpointGUI::CheckpointGUI()
 {
@@ -14,20 +15,43 @@ void CheckpointGUI::RenderCheckpointGUI()
 		ImGui::Begin("Checkpoints");
 		if (ImGui::Button("Fetch position"))
 		{
-			checkpoints.push_back(kaoProcess->ReadPosition());
+			FetchCheckpoint();
 		}
 
 		if (ImGui::Button("Load cheackpoint"))
 		{
-			if (!checkpoints.empty())
-			{
-				kaoProcess->WritePosition(checkpoints.back());
-			}
+			LoadCheckpoint();
 		}
 
+		CheckpointKeyBinds();
 		RenderCheckpointList();
 		ImGui::End();
 	}
+}
+
+void CheckpointGUI::CheckpointKeyBinds()
+{
+	if (ImGui::IsKeyPressed(KeyBinds::AddCheckpoint))
+	{
+		FetchCheckpoint();
+	}
+	if (ImGui::IsKeyPressed(KeyBinds::LoadLastCheckpoint))
+	{
+		LoadCheckpoint();
+	}
+}
+
+void CheckpointGUI::LoadCheckpoint()
+{
+	if (!checkpoints.empty())
+	{
+		kaoProcess->WritePosition(checkpoints.back());
+	}
+}
+
+void CheckpointGUI::FetchCheckpoint()
+{
+	checkpoints.push_back(kaoProcess->ReadPosition());
 }
 
 void CheckpointGUI::RenderCheckpointList()

@@ -15,6 +15,10 @@ public:
 
 private:
 
+	void CheckpointKeyBinds();
+	void LoadCheckpoint();
+	void FetchCheckpoint();
+
 	void RenderCheckpointList();
 
 private:
@@ -22,10 +26,7 @@ private:
 	KaoProcess* kaoProcess = nullptr;
 	std::vector<Vector3<float>> checkpoints;
 
-
-
 public:
 
 };
 #endif // !CHECKPOINTGUI
-
