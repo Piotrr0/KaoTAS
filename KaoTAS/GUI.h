@@ -2,6 +2,7 @@
 #define MAINGUI_H
 
 #include "LocalPlayerGUI.h"
+#include "CheckpointGUI.h"
 
 class GUI
 {
@@ -15,6 +16,7 @@ private:
 private:
 
 	LocalPlayerGUI* playerGUI = nullptr;
+	CheckpointGUI* checkpointGUI = nullptr;
 
 public:
 

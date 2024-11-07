@@ -28,6 +28,9 @@ public:
 		return data;
 	}
 
+	void WritePosition(Vector3<float> position);
+	Vector3<float> ReadPosition();
+
 private:
 
 	void ReadGameAddresses();
