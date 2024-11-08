@@ -16,6 +16,8 @@
     <ClCompile Include="LocalPlayerGUI.cpp" />
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="CheckpointGUI.cpp" />
+    <ClCompile Include="BaseGUI.cpp" />
+    <ClCompile Include="Address.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Offsets.h" />
@@ -40,6 +42,8 @@
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="CheckpointGUI.h" />
     <ClInclude Include="KeyBinds.h" />
+    <ClInclude Include="BaseGUI.h" />
+    <ClInclude Include="Address.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

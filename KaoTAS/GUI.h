@@ -1,6 +1,7 @@
 #ifndef MAINGUI_H
 #define MAINGUI_H
 
+#include <memory>
 #include "LocalPlayerGUI.h"
 #include "CheckpointGUI.h"
 
@@ -15,9 +16,9 @@ private:
 
 private:
 
-	LocalPlayerGUI* playerGUI = nullptr;
-	CheckpointGUI* checkpointGUI = nullptr;
-
+	std::unique_ptr<LocalPlayerGUI> playerGUI = std::make_unique<LocalPlayerGUI>();
+	std::unique_ptr<CheckpointGUI> checkpointGUI = std::make_unique<CheckpointGUI>();
+	
 public:
 
 };

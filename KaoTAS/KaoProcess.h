@@ -3,33 +3,12 @@
 
 #include "Memory.h"
 #include "Vector3.h"
+#include "Address.h"
 
 class KaoProcess
 {
 public:
 	KaoProcess();
-
-	template <typename T>
-	bool WriteToKaoMemory(const uintptr_t& address, T amount)
-	{
-		if (mem == nullptr || address == 0) return false;
-		if (mem->Write<T>(address, amount))
-		{
-			return true;
-		}
-		return false;
-	}
-
-	template <typename T>
-	T ReadFromKaoMemory(const uintptr_t& address)
-	{
-		if (mem == nullptr || address == 0) return{};
-		T data = mem->Read<T>(address);
-		return data;
-	}
-
-	void WritePosition(Vector3<float> position);
-	Vector3<float> ReadPosition();
 
 private:
 
@@ -38,25 +17,22 @@ private:
 private:
 	
 	const wchar_t* processName = L"kao2.exe";
-	Memory* mem = nullptr;
+	std::unique_ptr<Memory> mem = std::make_unique<Memory>(processName);
 
-	uintptr_t ModuleBaseAddress = 0;
+	Address<int> ModuleBaseAddress;
+	Address<int> kao2GameletAddress;
+	Address<int> localPlayerAddress;
 
-	uintptr_t kao2GameletAddress = 0;
-	uintptr_t localPlayerAddress = 0;
-
-	Vector3<uintptr_t> positionAddress;
-	uintptr_t ducatsAddress = 0;
-	uintptr_t crystalsAddress = 0;
-	uintptr_t starsAddress = 0;
-
+	Address<int> ducatsAddress;
+	Address<int> crystalsAddress;
+	Address<int> starsAddress;
+	Vector3<Address<float>> positionAddress;
 
 public:
-	inline uintptr_t GetDucatsAddress() const { return ducatsAddress; }
-	inline uintptr_t GetCrystalsAddress() const { return crystalsAddress; }
-	inline uintptr_t GetStarsAddress() const { return starsAddress; }
-	inline Vector3<uintptr_t> GetPositionAddress() const { return positionAddress; }
-
+	inline Address<int> GetDucatsAddress() const { return ducatsAddress; }
+	inline Address<int> GetCrystalsAddress() const { return crystalsAddress; }
+	inline Address<int> GetStarsAddress() const { return starsAddress; }
+	inline Vector3<Address<float>> GetPositionAddress() const { return positionAddress; }
 };
 
 #endif // !KAOPROCESS_H

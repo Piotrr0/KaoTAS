@@ -140,6 +140,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Address.cpp" />
+    <ClCompile Include="BaseGUI.cpp" />
     <ClCompile Include="CheckpointGUI.cpp" />
     <ClCompile Include="glad\src\glad.c" />
     <ClCompile Include="GUI.cpp" />
@@ -157,6 +159,8 @@
     <ClCompile Include="Memory.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Address.h" />
+    <ClInclude Include="BaseGUI.h" />
     <ClInclude Include="CheckpointGUI.h" />
     <ClInclude Include="KeyBinds.h" />
     <ClInclude Include="Offsets.h" />

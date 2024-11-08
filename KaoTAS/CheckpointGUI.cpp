@@ -3,30 +3,22 @@
 #include <string>
 #include "KeyBinds.h"
 
-CheckpointGUI::CheckpointGUI()
+void CheckpointGUI::RenderGUI()
 {
-	kaoProcess = new KaoProcess();
-}
-
-void CheckpointGUI::RenderCheckpointGUI()
-{
-	if (kaoProcess)
+	ImGui::Begin("Checkpoints");
+	if (ImGui::Button("Fetch position"))
 	{
-		ImGui::Begin("Checkpoints");
-		if (ImGui::Button("Fetch position"))
-		{
-			FetchCheckpoint();
-		}
-
-		if (ImGui::Button("Load cheackpoint"))
-		{
-			LoadCheckpoint();
-		}
-
-		CheckpointKeyBinds();
-		RenderCheckpointList();
-		ImGui::End();
+		FetchCheckpoint();
 	}
+
+	if (ImGui::Button("Load checkpoint"))
+	{
+		LoadCheckpoint();
+	}
+
+	CheckpointKeyBinds();
+	RenderCheckpointList();
+	ImGui::End();
 }
 
 void CheckpointGUI::CheckpointKeyBinds()
@@ -45,13 +37,17 @@ void CheckpointGUI::LoadCheckpoint()
 {
 	if (!checkpoints.empty())
 	{
-		kaoProcess->WritePosition(checkpoints.back());
+		checkpoints.back().LoadPosition();
 	}
 }
 
 void CheckpointGUI::FetchCheckpoint()
 {
-	checkpoints.push_back(kaoProcess->ReadPosition());
+	if (process)
+	{
+		Checkpoint checkpoint(process->GetPositionAddress());
+		checkpoints.push_back(checkpoint);
+	}
 }
 
 void CheckpointGUI::RenderCheckpointList()
@@ -66,9 +62,9 @@ void CheckpointGUI::RenderCheckpointList()
 			ImGui::Text(childID.c_str());
 			ImGui::BeginChild(childID.c_str(), ImVec2(100, 100), true, ImGuiWindowFlags_NoScrollbar);
 			{
-				ImGui::Text("X: %f", checkpoints[i].x);
-				ImGui::Text("Y: %f", checkpoints[i].y);
-				ImGui::Text("Z: %f", checkpoints[i].z);
+				ImGui::Text("X: %f", checkpoints[i].savedPosition.x);
+				ImGui::Text("Y: %f", checkpoints[i].savedPosition.y);
+				ImGui::Text("Z: %f", checkpoints[i].savedPosition.z);
 			}
 			ImGui::EndChild();
 		}

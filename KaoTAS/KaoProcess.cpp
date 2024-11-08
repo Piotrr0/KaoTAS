@@ -4,55 +4,22 @@
 
 KaoProcess::KaoProcess()
 {
-	mem = new Memory({ processName });
-	if (mem == nullptr)
-	{
-		std::cerr << "mem is nullptr.\n";
-		return;
-	}
-
-	ModuleBaseAddress = mem->GetModuleAddress(processName);
-	if (ModuleBaseAddress == 0)
-	{
-		std::cerr << "Failed to get module base address.\n";
-		return;
-	}
+    ModuleBaseAddress = Address<int>(mem->GetModuleAddress(processName));
 	ReadGameAddresses();
 }
 
 void KaoProcess::ReadGameAddresses()
 {
-	kao2GameletAddress = mem->Read<int>(ModuleBaseAddress + Offset::kao2Gamelet);
-	localPlayerAddress = mem->Read<int>(kao2GameletAddress + Offset::localPlayer);
+    kao2GameletAddress.SetAddress(Address<int>(ModuleBaseAddress.GetAddress() + Offset::kao2Gamelet).ReadValue());
+    localPlayerAddress.SetAddress(Address<int>(kao2GameletAddress.GetAddress() + Offset::localPlayer).ReadValue());
 
-	positionAddress = Vector3<uintptr_t>
-		(
-			(localPlayerAddress + Offset::X),
-			(localPlayerAddress + Offset::Y),
-			(localPlayerAddress + Offset::Z)
-		);
+    positionAddress = Vector3<Address<float>>(
+        Address<float>(localPlayerAddress.GetAddress() + Offset::X),
+        Address<float>(localPlayerAddress.GetAddress() + Offset::Y),
+        Address<float>(localPlayerAddress.GetAddress() + Offset::Z)
+    );
 
-	ducatsAddress = ModuleBaseAddress + Offset::ducats;
-	crystalsAddress = ModuleBaseAddress + Offset::crystals;
-	starsAddress = ModuleBaseAddress + Offset::stars;
-}
-
-void KaoProcess::WritePosition(Vector3<float> position)
-{
-	WriteToKaoMemory<float>(GetPositionAddress().x, position.x);
-	WriteToKaoMemory<float>(GetPositionAddress().y, position.y);
-	WriteToKaoMemory<float>(GetPositionAddress().z, position.z);
-}
-
-Vector3<float> KaoProcess::ReadPosition()
-{
-	Vector3<float> position;
-	position = Vector3<float>
-	(
-		ReadFromKaoMemory<float>(GetPositionAddress().x),
-		ReadFromKaoMemory<float>(GetPositionAddress().y),
-		ReadFromKaoMemory<float>(GetPositionAddress().z)
-	);
-
-	return position;
+    ducatsAddress = Address<int>(ModuleBaseAddress.GetAddress() + Offset::ducats);
+    crystalsAddress = Address<int>(ModuleBaseAddress.GetAddress() + Offset::crystals);
+    starsAddress = Address<int>(ModuleBaseAddress.GetAddress() + Offset::stars);
 }

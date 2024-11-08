@@ -4,12 +4,11 @@
 
 GUI::GUI()
 {
-	playerGUI = new LocalPlayerGUI();
-	checkpointGUI = new CheckpointGUI();
+
 }
 
 void GUI::RenderUI()
 {
-	playerGUI->RenderLocalPlayerGUI();
-	checkpointGUI->RenderCheckpointGUI();
+	playerGUI->RenderGUI();
+	checkpointGUI->RenderGUI();
 }

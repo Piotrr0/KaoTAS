@@ -2,33 +2,33 @@
 #define LOCALPLAYERGUI_H
 
 #include "KaoProcess.h"
+#include "BaseGUI.h"
+#include "Vector3.h"
+#include "memory"
 
-class LocalPlayerGUI
+class LocalPlayerGUI : public BaseGUI
 {
 public:
-	LocalPlayerGUI();
-	void RenderLocalPlayerGUI();
+    LocalPlayerGUI() : BaseGUI("LocalPlayer\0") {}
+    void RenderGUI() override;
 
 private:
 
-	template <typename T>
-	void RenderInput(const char* label, T* value, uintptr_t address);
+    void RenderPositionSection();
+    void RenderResourcesSection();
+
+    template <typename T>
+    void RenderInput(const char* label, T* value, Address<T> address);
 
 private:
+    
+    std::unique_ptr<KaoProcess> process = std::make_unique<KaoProcess>();
 
-	KaoProcess* kaoProcess = nullptr;
+    int ducats = 0;
+    int crystals = 0;
+    int stars = 0;
 
-	const char* name = "LocalPlayer";
-
-	int ducats = 0;
-	int crystals = 0;
-	int stars = 0;
-	
-	float positionX = 0.f;
-	float positionY = 0.f;
-	float positionZ = 0.f;
-
-public:
+    Vector3<float> position{};    
 };
 
-#endif
+#endif 
