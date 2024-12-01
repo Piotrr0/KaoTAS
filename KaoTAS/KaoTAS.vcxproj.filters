@@ -2,7 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="glad\src\glad.c" />
-    <ClCompile Include="GUI.cpp" />
     <ClCompile Include="imgui\backends\imgui_impl_glfw.cpp" />
     <ClCompile Include="imgui\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="imgui\backends\imgui_impl_win32.cpp" />
@@ -13,11 +12,13 @@
     <ClCompile Include="imgui\imgui_widgets.cpp" />
     <ClCompile Include="KaoProcess.cpp" />
     <ClCompile Include="KaoTAS.cpp" />
-    <ClCompile Include="LocalPlayerGUI.cpp" />
     <ClCompile Include="Memory.cpp" />
-    <ClCompile Include="CheckpointGUI.cpp" />
-    <ClCompile Include="BaseGUI.cpp" />
     <ClCompile Include="Address.cpp" />
+    <ClCompile Include="UI\HUD\HUD.cpp" />
+    <ClCompile Include="UI\Widget\PlayerWidget.cpp" />
+    <ClCompile Include="UI\WidgetController\WidgetController.cpp" />
+    <ClCompile Include="UI\WidgetController\PlayerWidgetController.cpp" />
+    <ClCompile Include="UI\Widget\Widget.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Offsets.h" />
@@ -25,7 +26,6 @@
     <ClInclude Include="glad\include\KHR\khrplatform.h" />
     <ClInclude Include="GLFW\include\GLFW\glfw3.h" />
     <ClInclude Include="GLFW\include\GLFW\glfw3native.h" />
-    <ClInclude Include="GUI.h" />
     <ClInclude Include="imgui\backends\imgui_impl_glfw.h" />
     <ClInclude Include="imgui\backends\imgui_impl_opengl3.h" />
     <ClInclude Include="imgui\backends\imgui_impl_opengl3_loader.h" />
@@ -37,13 +37,15 @@
     <ClInclude Include="imgui\imstb_textedit.h" />
     <ClInclude Include="imgui\imstb_truetype.h" />
     <ClInclude Include="KaoProcess.h" />
-    <ClInclude Include="LocalPlayerGUI.h" />
     <ClInclude Include="Memory.h" />
     <ClInclude Include="Vector3.h" />
-    <ClInclude Include="CheckpointGUI.h" />
     <ClInclude Include="KeyBinds.h" />
-    <ClInclude Include="BaseGUI.h" />
     <ClInclude Include="Address.h" />
+    <ClInclude Include="UI\HUD\HUD.h" />
+    <ClInclude Include="UI\Widget\PlayerWidget.h" />
+    <ClInclude Include="UI\WidgetController\WidgetController.h" />
+    <ClInclude Include="UI\WidgetController\PlayerWidgetController.h" />
+    <ClInclude Include="UI\Widget\Widget.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

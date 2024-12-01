@@ -4,22 +4,22 @@
 
 KaoProcess::KaoProcess()
 {
-    ModuleBaseAddress = Address<int>(mem->GetModuleAddress(processName));
-	ReadGameAddresses();
+    MemoryAddresses.ModuleBaseAddress = Address<int>(mem->GetModuleAddress(processName));
+	ReadGameAddresses(MemoryAddresses);
 }
 
-void KaoProcess::ReadGameAddresses()
+void KaoProcess::ReadGameAddresses(GameMemoryAddresses& MemoryAddresses)
 {
-    kao2GameletAddress.SetAddress(Address<int>(ModuleBaseAddress.GetAddress() + Offset::kao2Gamelet).ReadValue());
-    localPlayerAddress.SetAddress(Address<int>(kao2GameletAddress.GetAddress() + Offset::localPlayer).ReadValue());
+    MemoryAddresses.kao2GameletAddress.SetAddress(Address<int>(MemoryAddresses.ModuleBaseAddress.GetAddress() + Offset::kao2Gamelet).ReadValue());
+    MemoryAddresses.localPlayerAddress.SetAddress(Address<int>(MemoryAddresses.kao2GameletAddress.GetAddress() + Offset::localPlayer).ReadValue());
 
-    positionAddress = Vector3<Address<float>>(
-        Address<float>(localPlayerAddress.GetAddress() + Offset::X),
-        Address<float>(localPlayerAddress.GetAddress() + Offset::Y),
-        Address<float>(localPlayerAddress.GetAddress() + Offset::Z)
+    MemoryAddresses.positionAddress = Vector3<Address<float>>(
+        Address<float>(MemoryAddresses.localPlayerAddress.GetAddress() + Offset::X),
+        Address<float>(MemoryAddresses.localPlayerAddress.GetAddress() + Offset::Y),
+        Address<float>(MemoryAddresses.localPlayerAddress.GetAddress() + Offset::Z)
     );
 
-    ducatsAddress = Address<int>(ModuleBaseAddress.GetAddress() + Offset::ducats);
-    crystalsAddress = Address<int>(ModuleBaseAddress.GetAddress() + Offset::crystals);
-    starsAddress = Address<int>(ModuleBaseAddress.GetAddress() + Offset::stars);
+    MemoryAddresses.ducatsAddress = Address<int>(MemoryAddresses.ModuleBaseAddress.GetAddress() + Offset::ducats);
+    MemoryAddresses.crystalsAddress = Address<int>(MemoryAddresses.ModuleBaseAddress.GetAddress() + Offset::crystals);
+    MemoryAddresses.starsAddress = Address<int>(MemoryAddresses.ModuleBaseAddress.GetAddress() + Offset::stars);
 }

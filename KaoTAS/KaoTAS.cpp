@@ -7,7 +7,7 @@
 #include <GLFW/glfw3.h>
 
 #include <iostream>
-#include "Gui.h"
+#include "UI/HUD/HUD.h"
 
 void SetupImGui(GLFWwindow* window);
 
@@ -30,7 +30,7 @@ int main()
     glfwSwapInterval(1);
 
     SetupImGui(window);
-    GUI gui;
+    HUD HUD;
 
     while (!glfwWindowShouldClose(window))
     {
@@ -40,7 +40,7 @@ int main()
         ImGui::NewFrame();
 
         // Render ImGui content
-        gui.RenderUI();
+        HUD.RenderOverlay();
 
         // Rendering
         ImGui::Render();
